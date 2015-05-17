@@ -1,0 +1,113 @@
+@font-face {
+    font-family: "My Custom Font";
+    src: url(fonts/joystix.ttf) format("truetype");
+}
+
+
+body {
+/*    background-color: #400D12;*/
+    height: 100%;
+}
+
+.jumbotron {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.jumbotron h1 {
+    font-family: "My Custom Font", Verdana, Tahoma;
+}
+
+.container {
+    padding-left: 15;
+    padding-right: 15;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container .text-muted {
+    margin: 20px 0; 
+}
+
+.blocks {
+    margin: 10px;
+}
+
+.square {
+    width: 400px;
+    height: 400px;
+    background-color: #E80000;
+    border-radius: 5px;
+    margin: 0 auto; 
+}
+
+.square:hover {
+    background: red;
+    cursor: pointer;
+}
+
+#footer {
+    background-color: #f5f5f5;
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Source Sans Pro', 'Helvetica', Arial, sans-serif;
+}
+
+#footer a.social {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.text-muted {
+    color: #777;
+}
+
+#overlay{
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #FFF;
+    opacity: 0.8;
+}
+#dialogbox{
+    display: none;
+    position: fixed;
+    width:550px;
+    z-index: 1000;
+    border-radius: 51px;
+}
+
+
+#dialogbox > div {
+    border-radius: 5px;
+    background : linear-gradient(#DED, #BBB);
+}
+#dialogbox > div > #dialogboxHeader{ 
+    font-size:19px;
+    padding:10px; 
+}
+#dialogbox > div > #dialogboxBody{ 
+    padding:20px; 
+    color:#FFF; 
+}
+#dialogbox > div > #dialogboxFooter{
+    padding:10px; 
+    text-align:right; 
+}
+
+.buttons {
+    display: inline-block;
+    border: 2px solid #FFF;
+    min-width: 125px;
+    margin: 0 10px;
+    padding: 8px 8px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: white;
+}
