@@ -112,6 +112,10 @@ body {
     margin-bottom: 0px; 
 }
 
+.share-button a{
+    color: inherit;
+    text-decoration: none;
+}
 .img-social {
     display: inline-block;
     width: 30px;
