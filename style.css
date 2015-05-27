@@ -3,9 +3,7 @@
     src: url(fonts/joystix.ttf) format("truetype");
 }
 
-
 body {
-/*    background-color: #400D12;*/
     height: 100%;
 }
 
@@ -25,7 +23,6 @@ body {
     margin-right: auto;
     margin-left: auto;
 }
-
 
 .blocks {
     margin: 10px;

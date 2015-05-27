@@ -167,9 +167,10 @@ var main = function() {
 
     $(document).keyup(function(e) {
 	if (e.keyCode == 27) $('.playAgain').click();   // esc
-	if (e.keyCode == 13) $('.share-button').click();   // esc
+	if (e.keyCode == 13) $('.share-button').click();   // enter
     });
 };
-// 59,89,152 fb color
+
 $(document).ready(main);
+
 
