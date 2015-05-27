@@ -51,12 +51,11 @@ var main = function() {
 		var victoryVideoLink = pickRandomFromArray(this.victoryVideos);
 		$('#dialogboxBody').append('<iframe width="450" height="315" src="' + victoryVideoLink + '?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
 		$('#dialogboxFooter').html('<div class="buttons playAgain"><p class="noselect">Play again</p></div>');
-		$('#dialogboxFooter').append('<div class="buttons share-button"><p class="noselect">Share this victory!</p></div>');
+		$('#dialogboxFooter').append('<div class="buttons share-button"><p class="noselect"><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.one-click-game.com" target="_blank">Share this victory!</a></p></div>');
 	    }
 	    else {
 		var lostGameMessage = pickRandomFromArray(this.gameOverMessages);
 		$('#dialogboxHeader').html("<h3>Game Over</h3>");
-//		$('#dialogboxHeader').css("backgroundColor", "#ED1C24")
 		$('#dialogboxBody').html('<h4>' + lostGameMessage + '</h4>');
 		$('#dialogboxFooter').html('<div class="buttons playAgain"><p class="noselect">Play again</p></div>');
 	    }
@@ -152,22 +151,6 @@ var main = function() {
 	popup.accept();
     });
 
-    $('body').on('click', '.share-button', function() {
-	FB.ui(
-	  {
-	    method: 'share',
-	    href: 'https://developers.facebook.com/docs/',
-	  },
-	  // callback
-	  function(response) {
-	    if (response && !response.error_code) {
-	      alert('Posting completed.');
-	    } else {
-	      alert('Error while posting.');
-	    }
-	  }
-	);
-    });
 
     // Dynamic buttons effect
     var buttonFadeTime = 100;

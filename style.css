@@ -68,14 +68,15 @@ body {
     z-index: 1000;
 }
 
-
 #dialogbox > div {
     border-radius: 5px;
     background : linear-gradient(#EEE, #CCC);
 }
+
 #dialogbox > div h4 {
     margin-bottom: 20px;
 }
+
 #dialogbox > div > #dialogboxHeader{ 
     font-size:19px;
     padding:10px; 
@@ -85,6 +86,7 @@ body {
     padding:20px; 
     text-align: center;
 }
+
 #dialogbox > div > #dialogboxFooter{
     padding:10px; 
     text-align:right; 
@@ -119,6 +121,7 @@ body {
 #footer > .container > div {
     margin-top: 10px;
 }
+
 .fb-icon {
     background: url('images/fbIconRed-small.png');
     transition: 0.2s;
