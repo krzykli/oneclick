@@ -53,7 +53,7 @@ var main = function() {
 		$('#dialogboxFooter').html('<div onclick="" class="buttons playAgain"><p class="noselect">Play again</p></div>');
 		$('#dialogboxFooter').append('<div onclick="" class="buttons share-button"><p class="noselect"><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.one-click-game.com">Share this victory!</a></p></div>');
 
-		$("meta[name='og\\:title']").attr('content', victoryVideoLink);
+		$("meta[name='og\\:video']").attr('content', victoryVideoLink);
 	    }
 	    else {
 		var lostGameMessage = pickRandomFromArray(this.gameOverMessages);
