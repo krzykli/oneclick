@@ -49,11 +49,11 @@ var main = function() {
 		$('#dialogboxHeader').css({"backgroundColor": "#78AB46", "color":"white"})
 		$('#dialogboxBody').html("<h4>You have won!</h4>");
 		var victoryVideoLink = pickRandomFromArray(this.victoryVideos);
+		$("meta[name='og\\:video']").attr('content', victoryVideoLink);
 		$('#dialogboxBody').append('<iframe width="450" height="315" src="' + victoryVideoLink + '?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
 		$('#dialogboxFooter').html('<div onclick="" class="buttons playAgain"><p class="noselect">Play again</p></div>');
 		$('#dialogboxFooter').append('<div onclick="" class="buttons share-button"><p class="noselect"><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.one-click-game.com">Share this victory!</a></p></div>');
 
-		$("meta[name='og\\:video']").attr('content', victoryVideoLink);
 	    }
 	    else {
 		var lostGameMessage = pickRandomFromArray(this.gameOverMessages);
