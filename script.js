@@ -1,19 +1,24 @@
 var main = function() {
-    var getLinesFromFile = function(filename) {
+    var getLinesFromFile = function(filename){
 	/// <returns type="array"> Array of lines from a file. </returns>
 	var sentences = [];
-	console.log('hereherher');
-	$.get(filename, function(txt){
-	    var lines = txt.responseText.split("\n");
-	    for (var i = 0, len = lines.length; i < len; i++) {
-		sentences.push(lines[i]);
-		alert(lines[i]);
+	$.ajax({ 
+	    url: filename, 
+            async: false,
+            type: 'GET',
+	    success: function(txt) {
+		var lines = txt.split("\n");
+		for (var i = 0, len = lines.length; i < len; i++) {
+		    if (lines[i]){ 
+			sentences.push(lines[i]);		    
+		    }
+		}
 	    }
-	}); 
-	return sentences;
+        });
+	return sentences; 
     }
 
-    var pickRandomFromArray = function(array) {
+    var pickRandomFromArray = function(array){
 	function getRandomInt(min, max) {
 	    return Math.floor(Math.random() * (max - min)) + min;
 	}
@@ -21,9 +26,10 @@ var main = function() {
     }
 
     function GameResultPopup(){
+	// get the array of game over phrases
+	this.gameOverMessages = getLinesFromFile('data/gameOverMessages');
+	this.victoryVideos = getLinesFromFile('data/victoryVideos');
 
-	this.lostGameMessage = pickRandomFromArray(getLinesFromFile('./words/lostMessages'));
-	
 	this.render = function(result){
 	    var winW = window.innerWidth;
 	    var winH = window.innerHeight;
@@ -35,68 +41,152 @@ var main = function() {
 	    $overlay.css("height", String(winH) + "px");
 	    $dialogbox.css("left" , String((winW/2) - (550 * .5)) + "px");
 	    $dialogbox.css("top", "100px");
-	    $dialogbox.animate({ top: 220}, 300);
+	    $dialogbox.animate({ top: 120}, 200);
 	    $dialogbox.show()
 	    
 	    if (result) {
-		$('#dialogboxHeader').html("Acknowledge This Message");
-		$('#dialogboxBody').html("You have won");
-		$('#dialogboxFooter').html('<div class="buttons">I want to play again!</div>');
-		$('#dialogboxFooter').append('<div class="buttons">Gonna share this victory!</div>');
+		$('#dialogboxHeader').html("<h3>Congratulations!</h3>");
+		$('#dialogboxHeader').css({"backgroundColor": "#78AB46", "color":"white"})
+		$('#dialogboxBody').html("<h4>You have won!</h4>");
+		var victoryVideoLink = pickRandomFromArray(this.victoryVideos);
+		$('#dialogboxBody').append('<iframe width="450" height="315" src="' + victoryVideoLink + '?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
+		$('#dialogboxFooter').html('<div class="buttons playAgain"><p class="noselect">Play again</p></div>');
+		$('#dialogboxFooter').append('<div class="buttons share-button"><p class="noselect">Share this victory!</p></div>');
 	    }
 	    else {
-		$('#dialogboxHeader').html("Game summary");
-		$('#dialogboxBody').html(this.lostGameMessage);
-		$('#dialogboxFooter').html('<div class="buttons">Play again!</div>');
+		var lostGameMessage = pickRandomFromArray(this.gameOverMessages);
+		$('#dialogboxHeader').html("<h3>Game Over</h3>");
+//		$('#dialogboxHeader').css("backgroundColor", "#ED1C24")
+		$('#dialogboxBody').html('<h4>' + lostGameMessage + '</h4>');
+		$('#dialogboxFooter').html('<div class="buttons playAgain"><p class="noselect">Play again</p></div>');
 	    }
 	}
 	this.accept = function(){
 	    $('#dialogbox').hide();
 	    $('#overlay').hide();
+	    $('#dialogboxBody').html("");
+	    $('#dialogboxHeader').removeAttr('style');
 	    resetGame();
 	}
     }
 
-    var popup = new GameResultPopup() 
-    var level = 1;
-    var score = 0;
+    var $square = $('#square');
+    var squareColor = '#E80000';
+    var squareHoverColor = 'red';
+    var squareGameOverColor = 'black';
+    var squareWinColor = 'green';
 
-    //for( i=0; i < cubeNumber; i++){
-    //	$('.blocks').append('<div class="rect"></div>');
-   // }
-    
-    var beginGame = function(){
+    function SquareObj(){
+	// 0 reset, -1 lost, 1 win
+	this.state = 0;
+	var active = true;
 
-    }    
+	var squareFadeTime = 200;
 
-    var resetGame = function() {
-	score = 0;
-	$('.square').animate({ backgroundColor: '#E80000' }, 200);
+	this.deactivate = function () {
+	    $square.addClass(".not-active");
+	    $('body').off('click', $square);
+	    active = false;
+	}
+
+	this.activate = function() {
+	    $square.removeClass(".not-active");
+	    active = true;
+	}
+	
+	this.setState = function(state){
+	    switch(state){
+	    case -1:
+		$square.animate({ backgroundColor: squareGameOverColor }, squareFadeTime);
+		break;
+	    case 0:
+		$square.animate({ backgroundColor: squareColor }, squareFadeTime);
+		break;
+	    case 1:
+		$square.animate({ backgroundColor: squareWinColor }, squareFadeTime);
+		break;
+	    default:
+		console.log('Refresh');
+	    }
+	}
+
+	this.isActive = function(){
+	    return active;
+	}
     }
 
-    $('.blocks').append('<div class="square"></div>');
+    var popup = new GameResultPopup(); 
+    var squareObj = new SquareObj();
 
-    $('body').on('click', '.square', function() {
-	$(this).animate({ backgroundColor: '#EEE' }, 200);
+    var squareFadeTime = 200;
+    var popupDelayTime = 300;
+    
+    var resetGame = function() {
+	squareObj.setState(0);
+	squareObj.activate();
+    }
+
+    $square.click( function() {
 	var random = Math.random();
+	// Disable interaction right after the click to avoid multi clicking
+	if (!squareObj.isActive()){
+	    return;
+	}
+	squareObj.deactivate();
+	
 	if (random > 0.9){
-	    $(this).animate({ backgroundColor: 'green' }, 200);
+	    squareObj.setState(1);
 	    setTimeout(function () {
 		popup.render(true);
-	    }, 400)
+	    }, popupDelayTime)
 	}
 	else {
-	    $(this).animate({ backgroundColor: 'black' }, 200);
+	    squareObj.setState(-1);
 	    setTimeout(function () {
 		popup.render(false);
-	    }, 400);
+	    }, popupDelayTime);
 	}
     });
+
     $('body').on('click', '.buttons', function() {
 	popup.accept();
     });
 
-};
+    $('body').on('click', '.share-button', function() {
+	FB.ui(
+	  {
+	    method: 'share',
+	    href: 'https://developers.facebook.com/docs/',
+	  },
+	  // callback
+	  function(response) {
+	    if (response && !response.error_code) {
+	      alert('Posting completed.');
+	    } else {
+	      alert('Error while posting.');
+	    }
+	  }
+	);
+    });
 
+    // Dynamic buttons effect
+    var buttonFadeTime = 100;
+    $('body').on('mouseenter', '.buttons', function() {
+	var bgColor = '#78AB46';
+	if ($(this).hasClass('share-button')){
+	    bgColor = '#3B5998';
+	}
+	$(this).animate({ backgroundColor: bgColor , borderColor: bgColor}, buttonFadeTime);
+    });
+    $('body').on('mouseleave', '.buttons', function() {
+	$(this).animate({ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'white'}, buttonFadeTime);
+    });
+
+    $(document).keyup(function(e) {
+	if (e.keyCode == 27) $('.playAgain').click();   // esc
+	if (e.keyCode == 13) $('.share-button').click();   // esc
+    });
+};
+// 59,89,152 fb color
 $(document).ready(main);
 
