@@ -43,7 +43,13 @@ var main = function() {
 	    $dialogbox.css("top", "100px");
 	    $dialogbox.animate({ top: 120}, 200);
 	    $dialogbox.show()
-	    
+	    fbShare = function() {
+		var width = 550;
+		var height = 500;
+		var winTop = (screen.height / 2) - (width / 2);
+		var winLeft = (screen.width / 2) - (height / 2);
+		window.open("http://www.facebook.com/sharer/sharer.php?u=http://www.one-click-game.com", "_blank", "toolbar=no, scrollbars=no, resizable=no, top=" + winTop + ", left=" + winLeft + ", width=" + width +", height=" + height)
+	    }
 	    if (result) {
 		$('#dialogboxHeader').html("<h3>Congratulations!</h3>");
 		$('#dialogboxHeader').css({"backgroundColor": "#78AB46", "color":"white"})
@@ -52,7 +58,7 @@ var main = function() {
 		$("meta[name='og:video']").attr('content', victoryVideoLink);
 		$('#dialogboxBody').append('<iframe width="450" height="315" src="' + victoryVideoLink + '?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
 		$('#dialogboxFooter').html('<div onclick="" class="buttons playAgain"><p class="noselect">Play again</p></div>');
-		$('#dialogboxFooter').append('<div onclick="" class="buttons share-button"><p class="noselect"><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.one-click-game.com">Share this victory!</a></p></div>');
+		$('#dialogboxFooter').append('<div onclick="" class="buttons share-button"><p class="noselect"><a href="javascript:fbShare()">Share this victory!</a></p></div>');
 
 	    }
 	    else {
