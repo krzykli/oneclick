@@ -43,29 +43,37 @@ var main = function() {
 	    $dialogbox.css("top", "100px");
 	    $dialogbox.animate({ top: 120}, 200);
 	    $dialogbox.show()
+
 	    fbShare = function() {
 		var width = 550;
 		var height = 500;
 		var winTop = (screen.height / 2) - (width / 2);
 		var winLeft = (screen.width / 2) - (height / 2);
-		window.open("http://www.facebook.com/sharer/sharer.php?u=http://www.one-click-game.com", "_blank", "toolbar=no, scrollbars=no, resizable=no, top=" + winTop + ", left=" + winLeft + ", width=" + width +", height=" + height)
+		window.open("http://www.facebook.com/sharer/sharer.php?u=http://www.one-click-game.com", 
+			    "_blank", "toolbar=no, scrollbars=no, resizable=no, top=" + winTop + 
+			    ",left=" + winLeft + ", width=" + width +", height=" + height)
 	    }
+
+	    var playAgainButtonHtml = '<div onclick="" class="buttons playAgain">' +
+				      '<p class="noselect">Play again</p></div>';
 	    if (result) {
 		$('#dialogboxHeader').html("<h3>Congratulations!</h3>");
 		$('#dialogboxHeader').css({"backgroundColor": "#78AB46", "color":"white"})
 		$('#dialogboxBody').html("<h4>You have won!</h4>");
 		var victoryVideoLink = pickRandomFromArray(this.victoryVideos);
 		$("meta[name='og:video']").attr('content', victoryVideoLink);
-		$('#dialogboxBody').append('<iframe width="450" height="315" src="' + victoryVideoLink + '?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
-		$('#dialogboxFooter').html('<div onclick="" class="buttons playAgain"><p class="noselect">Play again</p></div>');
-		$('#dialogboxFooter').append('<div onclick="fbShare()" class="buttons share-button"><p class="noselect">Share this victory!</p></div>');
+		$('#dialogboxBody').append('<iframe width="450" height="315" src="' + victoryVideoLink + 
+					   '?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
+		$('#dialogboxFooter').html(playAgainButtonHtml);
+		$('#dialogboxFooter').append('<div onclick="fbShare()" class="buttons share-button"> ' + 
+					     '<p class="noselect">Share this victory!</p></div>');
 
 	    }
 	    else {
 		var lostGameMessage = pickRandomFromArray(this.gameOverMessages);
 		$('#dialogboxHeader').html("<h3>Game Over</h3>");
 		$('#dialogboxBody').html('<h4>' + lostGameMessage + '</h4>');
-		$('#dialogboxFooter').html('<div onclick="" class="buttons playAgain"><p class="noselect">Play again</p></div>');
+		$('#dialogboxFooter').html(playAgainButtonHtml);
 	    }
 	}
 	this.accept = function(){
@@ -104,13 +112,16 @@ var main = function() {
 	this.setState = function(state){
 	    switch(state){
 	    case -1:
-		$square.animate({ backgroundColor: squareGameOverColor }, squareFadeTime);
+		$square.animate({ backgroundColor: squareGameOverColor },
+				  squareFadeTime);
 		break;
 	    case 0:
-		$square.animate({ backgroundColor: squareColor }, squareFadeTime);
+		$square.animate({ backgroundColor: squareColor },
+				  squareFadeTime);
 		break;
 	    case 1:
-		$square.animate({ backgroundColor: squareWinColor }, squareFadeTime);
+		$square.animate({ backgroundColor: squareWinColor },
+				  squareFadeTime);
 		break;
 	    default:
 		console.log('Refresh');
@@ -167,10 +178,12 @@ var main = function() {
 	if ($(this).hasClass('share-button')){
 	    bgColor = '#3B5998';
 	}
-	$(this).animate({ backgroundColor: bgColor , borderColor: bgColor}, buttonFadeTime);
+	$(this).animate({ backgroundColor: bgColor , borderColor: bgColor},
+			  buttonFadeTime);
     });
     $('body').on('mouseleave', '.buttons', function() {
-	$(this).animate({ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'white'}, buttonFadeTime);
+	$(this).animate({ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'white'},
+			  buttonFadeTime);
     });
 
     $(document).keyup(function(e) {

@@ -58,6 +58,7 @@ body {
     background: #333;
     opacity: 0.8;
 }
+
 #dialogbox{
     display: none;
     position: fixed;
@@ -109,16 +110,13 @@ body {
     margin-bottom: 0px; 
 }
 
-.share-button a{
-    color: inherit;
-    text-decoration: none;
-}
 .img-social {
     display: inline-block;
     width: 30px;
     height: 30px;
     border-radius: 3px;
 }
+
 #footer > .container > div {
     margin-top: 10px;
 }
