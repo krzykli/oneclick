@@ -58,7 +58,7 @@ var main = function() {
 		$("meta[name='og:video']").attr('content', victoryVideoLink);
 		$('#dialogboxBody').append('<iframe width="450" height="315" src="' + victoryVideoLink + '?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
 		$('#dialogboxFooter').html('<div onclick="" class="buttons playAgain"><p class="noselect">Play again</p></div>');
-		$('#dialogboxFooter').append('<div onclick="" class="buttons share-button"><p class="noselect"><a href="javascript:fbShare()">Share this victory!</a></p></div>');
+		$('#dialogboxFooter').append('<div onclick="fbShare()" class="buttons share-button"><p class="noselect">Share this victory!</p></div>');
 
 	    }
 	    else {
